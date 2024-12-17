@@ -217,6 +217,12 @@ function DoWork([string]$appsPath) {
                 Add-Member -InputObject $newApp -MemberType NoteProperty -Name "detached" -Value @($gameLaunchCmd)
                 Add-Member -InputObject $newApp -MemberType NoteProperty -Name "image-path" -Value $sunshineGameCoverPath
                 Add-Member -InputObject $newApp -MemberType NoteProperty -Name "id" -Value $id.ToString()
+                Add-Member -InputObject $newApp -MemberType NoteProperty -Name "prep-cmd" -Value @(
+                    @{
+                        "do" = "cmd /C C:\Tools\qres\qres.exe /x:%SUNSHINE_CLIENT_WIDTH% /y:%SUNSHINE_CLIENT_HEIGHT% /r:%SUNSHINE_CLIENT_FPS%"
+                        "undo" = "cmd /C C:\Tools\qres\qres.exe /x:1920 /y:1080 /r:240"
+                    }
+                )
 
                 $json.apps = $json.apps | ForEach-Object {
                     if ($_.detached) {
